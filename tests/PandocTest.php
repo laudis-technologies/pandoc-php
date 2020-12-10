@@ -153,8 +153,6 @@ final class PandocTest extends TestCase
         self::assertEquals('<h1 id="hallo">HALLO</h1>', trim($toCheck));
     }
 
-
-
     /**
      * @throws PandocException
      */
