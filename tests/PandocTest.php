@@ -158,7 +158,7 @@ final class PandocTest extends TestCase
      */
     public function testStreamPractinet(): void
     {
-        $temp = fopen('https://laudis.tech', 'rb');
+        $temp = fopen('http://practinet.be', 'rb');
 
         $command = Command::create()
             ->withResource($temp)
