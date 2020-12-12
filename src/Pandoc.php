@@ -19,6 +19,7 @@ use Laudis\Pandoc\Commands\OptionArgument;
 use Laudis\Pandoc\Enums\Option;
 use Laudis\Pandoc\Exceptions\PandocException;
 use Symfony\Component\Process\Process;
+use UnexpectedValueException;
 
 final class Pandoc
 {
@@ -53,7 +54,7 @@ final class Pandoc
     /**
      * @throws PandocException
      *
-     * @return Generator<string>
+     * @return Generator<int, string>
      */
     public function stream(Command $command): Generator
     {
@@ -158,6 +159,8 @@ final class Pandoc
      * @param resource|null $resource
      *
      * @throws PandocException
+     *
+     * @return Generator<int, string>
      */
     private function executeCommand(string $toExecute, $resource = null): Generator
     {
@@ -167,7 +170,13 @@ final class Pandoc
         }
 
         $process->start();
-        yield from $process->getIterator();
+        foreach ($process->getIterator() as $iteration) {
+            if (!is_string($iteration)) {
+                $message = 'Expected string values from the process iterator. Received: '.gettype($iteration);
+                throw new UnexpectedValueException($message);
+            }
+            yield $iteration;
+        }
 
         if ($process->getExitCode() !== 0) {
             throw new PandocException('Process failed');
