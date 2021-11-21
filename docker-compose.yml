@@ -7,7 +7,5 @@ services:
       dockerfile: Dockerfile
       args:
         - WITH_XDEBUG=true
-    volumes:
-      - .:/opt/project
     expose:
       - 9000
