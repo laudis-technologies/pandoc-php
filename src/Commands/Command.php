@@ -13,25 +13,24 @@ declare(strict_types=1);
 
 namespace Laudis\Pandoc\Commands;
 
-use Ds\Vector;
 use Laudis\Pandoc\Enums\Option;
 
 final class Command
 {
-    /** @var Vector<OptionArgument> */
-    private Vector $options;
-    /** @var Vector<string> */
-    private Vector $files;
+    /** @var list<OptionArgument> */
+    private array $options;
+    /** @var list<string> */
+    private array $files;
     /**
      * @var string|resource|null
      */
     private $contentOrResource;
 
     /**
-     * @param Vector<OptionArgument> $options
-     * @param Vector<string>         $files
+     * @param list<OptionArgument> $options
+     * @param list<string>         $files
      */
-    public function __construct(Vector $options, Vector $files)
+    public function __construct(array $options, array $files)
     {
         $this->options = $options;
         $this->files = $files;
@@ -39,12 +38,12 @@ final class Command
 
     public static function create(): self
     {
-        return new self(new Vector(), new Vector());
+        return new self([], []);
     }
 
     public function withOptionArgument(OptionArgument $option): self
     {
-        $this->options->push($option);
+        $this->options[] = $option;
 
         return $this;
     }
@@ -54,14 +53,14 @@ final class Command
      */
     public function withOption($option, ?string $argument = null): self
     {
-        $this->options->push(new OptionArgument($option, $argument));
+        $this->options[] = new OptionArgument($option, $argument);
 
         return $this;
     }
 
     public function withFile(string $file): self
     {
-        $this->files->push($file);
+        $this->files[] = $file;
 
         return $this;
     }
@@ -84,17 +83,17 @@ final class Command
     }
 
     /**
-     * @return Vector<OptionArgument>
+     * @return list<OptionArgument>
      */
-    public function getOptions(): Vector
+    public function getOptions(): array
     {
         return $this->options;
     }
 
     /**
-     * @return Vector<string>
+     * @return list<string>
      */
-    public function getFiles(): Vector
+    public function getFiles(): array
     {
         return $this->files;
     }

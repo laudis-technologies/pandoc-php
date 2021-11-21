@@ -3,3 +3,5 @@ phpunit.xml
 .php_cs.cache
 .phpunit.result.cache
 /.idea
+.php-cs-fixer.cache
+clover.xml

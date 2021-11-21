@@ -156,30 +156,6 @@ final class PandocTest extends TestCase
     /**
      * @throws PandocException
      */
-    public function testStreamPractinet(): void
-    {
-        $temp = fopen('http://practinet.be', 'rb');
-
-        $command = Command::create()
-            ->withResource($temp)
-            ->withOption(Option::FROM_FORMAT(), 'html')
-            ->withOption(Option::TO_FORMAT(), 'markdown')
-        ;
-
-        self::assertEquals('::: {#vue-mount}
-:::
-
-::: {.privacy-wrap}
-Copyright Practinet - All Rights Reserved \| [Uw privacy](/privacy)
-:::
-
-::: {.cookiewarning role="alert"}
-:::', $this->pandoc->run($command));
-    }
-
-    /**
-     * @throws PandocException
-     */
     public function testVersion(): void
     {
         self::assertMatchesRegularExpression('/^(\d+\.)+\d$/u', $this->pandoc->getVersion());
